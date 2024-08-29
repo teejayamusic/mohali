@@ -78,7 +78,7 @@ app.post('/register', (req, res) => {
         });
     });
 });
-
+app.use('/uploads', express.static('uploads'));
 // Login Dealer
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
