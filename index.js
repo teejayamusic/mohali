@@ -212,7 +212,15 @@ app.get('/properties', (req, res) => {
     db.query(query, params, (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
 
-        res.json(results); // Send data as is
+        // Construct the full URL for each image
+        const propertiesWithFullImageUrl = results.map(property => {
+            return {
+                ...property,
+                image: property.image ? `${req.protocol}://${req.get('host')}/${property.image}` : null
+            };
+        });
+
+        res.json(propertiesWithFullImageUrl); // Send data with full image URL
     });
 });
 
